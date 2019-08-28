@@ -15,7 +15,7 @@ export class AppComponent {
   contacts: Contact[];
   showFormAdd = false;
   person = new Contact();
-  teste: string;
+  contactName: string;
 
   constructor(private service: ContactService) { }
 
@@ -34,6 +34,14 @@ export class AppComponent {
   }
 
   saveContact() {
-    this.service.includeContact(this.person);
+    this.service.includeContact(this.person).subscribe((res) => {
+        console.log(res);
+    });
+  }
+
+  searchContact(id: string) {
+    this.service.searchByName(id).subscribe((res) => {
+      console.log(res);
+    });
   }
 }

@@ -9,18 +9,19 @@ import { take } from 'rxjs/operators';
 })
 export class ContactService {
   private readonly API = 'http://localhost:5001/contacts';
+  private readonly headerAPI = { headers: { 'Authorization': 'whatever-you-want' }};
 
   constructor(private http: HttpClient) { }
 
   public getContact(): Observable<Contact[]> {
-    return this.http.get<Contact[]>(this.API, { headers: { 'Authorization': 'whatever-you-want' }})
+    return this.http.get<Contact[]>(this.API, this.headerAPI)
   }
 
   public includeContact(contact: Contact): Observable<Contact> {
-    return this.http.post<Contact>(this.API, contact, { headers: { 'Authorization': 'whatever-you-want' }});
+    return this.http.post<Contact>(this.API, contact, this.headerAPI);
   }
 
-  public searchByID(id: string) {
-    return this.http.get<Contact>(`${this.API}/${id}`).pipe(take(1));
+  public searchByName(name: string) {
+    return this.http.get<Contact>(`${this.API}/${name}`, this.headerAPI);
   }
 }

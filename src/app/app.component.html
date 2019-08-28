@@ -2,50 +2,47 @@
   <div class="card-header">
     <div class="float-left">
       <div class="input-group">
-        <input type="text" class="form-control" placeholder="Nome do contato">
+        <input type="text" class="form-control" placeholder="Nome do contato" [(ngModel)]="contactName">
         <span class="input-group-btn">
-          <button class="btn btn-secondary" type="button">Buscar contato</button>
+          <button class="btn btn-primary search-contact" type="button" (click)="searchContact(contactName)">Buscar
+            contato</button>
         </span>
       </div>
     </div>
     <div class="float-right">
-      <button type="button" class="btn btn-success" (click)="addContact()">Add</button>
+      <button type="button" class="btn btn-info" (click)="addContact()">Add</button>
     </div>
   </div>
   <div class="card-body">
-      <table class="table table-hover" *ngIf="contacts; else loading">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Nome</th>
-            <th>E-mail</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let contact of contacts.contacts">
-            <td>{{ contact.id }}</td>
-            <td>{{ contact.name }}</td>
-            <td>{{ contact.email }}</td>
-            <td><img [src]="contact.avatarURL" alt="Avatar" style="width:10%"></td>
-          </tr>
-        </tbody>
-      </table>
-  
-      <ng-template #loading>
-        <span>Carregando Cursos...</span>
-      </ng-template>
-  
-      <!--ng-template #loadingError>
-        <div *ngIf="error$ | async; else loading" >
-          Erro ao carregar cursos. Tente novamente mais tarde.
-        </div>
-        <ng-template #loading>
-            <span>Carregando Cursos...</span>
-        </ng-template>
-      </ng-template -->
-    </div>
+    <table class="table table-hover" *ngIf="contacts; else loading">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>E-mail</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let contact of contacts.contacts">
+          <td>{{ contact.id }}</td>
+          <td>{{ contact.name }}</td>
+          <td>{{ contact.email }}</td>
+          <td><img [src]="contact.avatarURL" alt="Avatar" style="width:10%"></td>
+          <td>
+            <button class="btn btn-outline-success">Editar</button>
+            <button class="btn btn-outline-danger btn-remove">Remover</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <ng-template #loading>
+      <span>Carregando contatos...</span>
+    </ng-template>
   </div>
+</div>
 <div class="d-flex p-3" *ngIf="showFormAdd">
   <form>
     <div class="form-group">
@@ -54,12 +51,14 @@
     </div>
     <div class="form-group">
       <label for="email">E-mail</label>
-      <input type="email" class="form-control" id="email" placeholder="E-mail" [(ngModel)]="person.email" name="personEmail" >
+      <input type="email" class="form-control" id="email" placeholder="E-mail" [(ngModel)]="person.email"
+        name="personEmail">
     </div>
     <div class="form-group">
-        <label for="foto-contato">Adicionar foto</label>
-        <input type="file" class="form-control-file" id="foto-contato" [(ngModel)]="person.avatarURL" name="perasonAvatar">
-      </div>
+      <label for="foto-contato">Adicionar foto</label>
+      <input type="file" class="form-control-file" id="foto-contato" [(ngModel)]="person.avatarURL"
+        name="perasonAvatar">
+    </div>
     <button type="submit" class="btn btn-primary" (click)="saveContact()">Adicionar contato</button>
   </form>
 </div>
